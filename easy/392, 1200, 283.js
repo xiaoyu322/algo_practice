@@ -74,3 +74,52 @@ function isPositive(num1, num2) {
         return 'zero'
     }
 }
+
+
+
+//845
+
+var longestMountain = function(A) {
+    if (A.length < 3) {
+        return 0
+    }
+    
+    let peak = []
+    for (let i = 0; i < A.length; i++) {
+        if (A[i-1] < A[i] && A[i+1] < A[i]){
+            peak.push(i)
+        }
+    }
+    
+    let result = 0
+    for(let i = 0; i < peak.length; i++) {
+        let leftLength = findLeftLength(A, peak[i])
+        let rightLength = findRightLength(A, peak[i])
+        let currPeakLength = leftLength + rightLength + 1
+        if (currPeakLength > result) {
+            result = currPeakLength
+        }
+    }
+    return result
+    
+};
+
+var findLeftLength = function (A, peak) {
+    let i = 1
+    let result = 0
+    while (A[peak - i] < A[peak - i + 1] ) {
+        result +=1 
+        i+=1
+    }
+    return result 
+}
+
+var findRightLength = function (A, peak) {
+    let i = 1
+    let result = 0
+    while(A[peak+i] < A[peak+i-1]) {
+        result +=1 
+        i+=1
+    }
+    return result 
+}
